@@ -18,8 +18,9 @@ public class MainPage {
     private final By orderClickGoButton = By.xpath("//button[text()='Go!']");
     //Картинка: Такого заказа нет
     private final By notFoundImg = By.xpath("//img[@alt='Not found']");
+
     //Кнопка заказа
-    private final By createOrderButton = By.xpath("//div[contains(@class, 'Header')]/button[text()='Заказать']");
+    private final String createOrderButton = "//div[contains(@class, '%s')]/button[text()='Заказать']";
 
     //Кнопку куки
     private final By clickCookie = By.className("App_CookieButton__3cvqF");
@@ -33,7 +34,7 @@ public class MainPage {
         this.driver = driver;
     }
 
-    public void clickOrderStutusButtun() {
+    public void clickOrderStatusButton() {
         WebElement orderStatus = driver.findElement(orderStatusButton);
         orderStatus.click();
     }
@@ -60,8 +61,10 @@ public class MainPage {
         return driver.findElement(notFoundImg).isDisplayed();
     }
 
-    public void clickCreateOrder(){
-        WebElement createOrder = driver.findElement(createOrderButton);
+    public void clickCreateOrder(String index,String button){
+        System.out.println( index + " кнопка");
+        WebElement createOrder = driver.findElement(By.xpath(String.format(createOrderButton, button)));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", createOrder);
         createOrder.click();
     }
 

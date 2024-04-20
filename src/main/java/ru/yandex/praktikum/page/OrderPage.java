@@ -28,8 +28,8 @@ public class OrderPage {
     //Кнопка подтверждения заказа
     private final By clickAgreeOrderButton = By.xpath("//button[text()='Да']");
 
-    //Проверка текста оформленного заказа
-    private final By issuedOrder = By.xpath("//*[text()='Заказ оформлен']");
+    //Проверка текста оформленного заказа       //Изменено
+    private final By issuedOrder = By.xpath("//*[@class='Order_ModalHeader__3FDaJ']");
 
     public OrderPage(WebDriver driver) {
         this.driver = driver;
@@ -68,6 +68,7 @@ public class OrderPage {
     }
 
     public boolean issuedOrderText() {
-        return driver.findElement(issuedOrder).isEnabled();
+        //Исправлено
+        return driver.findElement(issuedOrder).isDisplayed();
     }
 }

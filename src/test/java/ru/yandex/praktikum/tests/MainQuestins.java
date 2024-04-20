@@ -1,4 +1,4 @@
-package ru.yandex.praktikum;
+package ru.yandex.praktikum.tests;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,12 +7,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import ru.yandex.praktikum.StartEnd;
+import ru.yandex.praktikum.WebDriverFactory;
 import ru.yandex.praktikum.page.MainPage;
 import static org.junit.Assert.assertTrue;
+import static ru.yandex.praktikum.Constant.URLCONST;
 
 @RunWith(Parameterized.class)
 public class MainQuestins {
-    private WebDriver driver ;
+    private WebDriver driver;
     private int index;
     private String answer;
 
@@ -20,19 +23,11 @@ public class MainQuestins {
         this.index = index;
         this.answer = answer;
     }
-    //Открыть браузер
-    @Before
-    public void setup(){
-        ChromeOptions options = new ChromeOptions(); // Драйвер для браузера
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = WebDriverFactory.getWebDriver(System.getProperty("browser", "firefox"));
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
 
     @Parameterized.Parameters
-    public static Object[][] data(){
+    public static Object[][] data() {
         return new Object[][]{
-                {0,"Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
+                {0, "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
                 {1, "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
                 {2, "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
                 {3, "Только начиная с завтрашнего дня. Но скоро станем расторопнее."},
@@ -44,7 +39,11 @@ public class MainQuestins {
     }
 
     @Test
-    public void MainQuestionTest(){
+    public void mainQuestionTest() {
+        //Запускам браузер
+        StartEnd startEnd = new StartEnd();
+        driver = startEnd.setup("firefox");
+
         //Создаем объект класса
         MainPage mainPage = new MainPage(driver);
         //Кликаем на кнопку куки, чтобы она не загараживала обзор другим элементам
@@ -57,10 +56,7 @@ public class MainQuestins {
         //Проверяем
         assertTrue(answerIsDisplayed);
 
-    }
-    //  Закрыть браузер
-    @After
-    public void tearDown() {
-        driver.quit();
+        //Закрываем браузер
+        startEnd.tearDown();
     }
 }
