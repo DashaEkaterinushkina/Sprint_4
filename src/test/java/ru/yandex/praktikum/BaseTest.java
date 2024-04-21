@@ -1,11 +1,9 @@
 package ru.yandex.praktikum;
 
-import org.junit.After;
-import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static ru.yandex.praktikum.Constant.URLCONST;
+import static ru.yandex.praktikum.Constant.URL_CONST;
 
 public class StartEnd {
 
@@ -16,7 +14,7 @@ public class StartEnd {
         ChromeOptions options = new ChromeOptions(); // Драйвер для браузера
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = WebDriverFactory.getWebDriver(System.getProperty("browser", browser));
-        driver.get(URLCONST);
+        driver.get(URL_CONST);
         return driver;
     }
 

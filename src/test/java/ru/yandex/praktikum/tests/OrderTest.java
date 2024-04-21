@@ -7,16 +7,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import ru.yandex.praktikum.StartEnd;
-import ru.yandex.praktikum.WebDriverFactory;
+import ru.yandex.praktikum.BaseTest;
 import ru.yandex.praktikum.page.MainPage;
 import ru.yandex.praktikum.page.OrderPage;
 
-import static ru.yandex.praktikum.Constant.URLCONST;
 
 @RunWith(Parameterized.class)
-public class OrderTest {
+public class OrderTest extends BaseTest {
 
     private WebDriver driver;
     private String index;
@@ -38,9 +35,6 @@ public class OrderTest {
 
     @Test
     public void createOrder(){
-        //Запускам браузер
-        StartEnd startEnd = new StartEnd();
-        driver = startEnd.setup("firefox");
 
         //Создаем объект класса главного окна и вызываем метод нажатия кнопки Заказать
         MainPage mainPage = new MainPage(driver);
@@ -64,8 +58,6 @@ public class OrderTest {
         //Проверяем окно об успешном создании заказа
         Assert.assertTrue(orderPage.issuedOrderText());
 
-        //Закрываем браузер
-        startEnd.tearDown();
-        }
+    }
 
 }
