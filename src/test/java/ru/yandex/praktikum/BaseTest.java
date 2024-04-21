@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import static ru.yandex.praktikum.Constant.URL_CONST;
 
-public class StartEnd {
+public class BaseTest {
 
     private WebDriver driver ;
 
@@ -16,10 +16,5 @@ public class StartEnd {
         driver = WebDriverFactory.getWebDriver(System.getProperty("browser", browser));
         driver.get(URL_CONST);
         return driver;
-    }
-
-    //  Закрыть браузер
-    public void tearDown() {
-        driver.quit();
     }
 }

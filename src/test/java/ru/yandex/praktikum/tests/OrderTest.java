@@ -1,8 +1,6 @@
 package ru.yandex.praktikum.tests;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -34,7 +32,11 @@ public class OrderTest extends BaseTest {
 //Тест orderNotFound исключён, т.к. по сценарию нет проверки статуса заказа
 
     @Test
-    public void createOrder(){
+    public void createOrderOne(){
+
+        //Запускам браузер
+        BaseTest baseTest = new BaseTest();
+        driver = baseTest.setup("firefox");
 
         //Создаем объект класса главного окна и вызываем метод нажатия кнопки Заказать
         MainPage mainPage = new MainPage(driver);
@@ -45,11 +47,11 @@ public class OrderTest extends BaseTest {
         //Создаем объект класса оформления заказа
         OrderPage orderPage = new OrderPage(driver);
         //Вводим данные пользователя
-        orderPage.fillCustomerInfo("Имя", "Фамилия", "Адрес", "Арбатская", "89523652147");
+        orderPage.fillCustomerInfo("Павел", "Панфилов", "Павловск", "Арбатская", "89652358963");
         orderPage.clickNextButton();
 
         //Вводим срок аренды
-        orderPage.orderRent("21.04.2024", "трое суток");
+        orderPage.orderRent("01.05.2024", "трое суток");
         orderPage.clickNextOrderButton();
 
         //Подтверждаем аренду
@@ -58,6 +60,42 @@ public class OrderTest extends BaseTest {
         //Проверяем окно об успешном создании заказа
         Assert.assertTrue(orderPage.issuedOrderText());
 
+        //Закрываем браузер
+        // По заданию: Метод driver.quit(); нужно использовать в конце каждого теста.
+        driver.quit();
     }
 
+    @Test
+    public void createOrderTwo(){
+
+        //Запускам браузер
+        BaseTest baseTest = new BaseTest();
+        driver = baseTest.setup("firefox");
+
+        //Создаем объект класса главного окна и вызываем метод нажатия кнопки Заказать
+        MainPage mainPage = new MainPage(driver);
+        mainPage.clickCreateOrder(index, button);
+        //Закрываем окно с куки
+        mainPage.closeCookiesWindows();
+
+        //Создаем объект класса оформления заказа
+        OrderPage orderPage = new OrderPage(driver);
+        //Вводим данные пользователя
+        orderPage.fillCustomerInfo("Мария", "Маркова", "Магнитогорск", "Арбатская", "89523652147");
+        orderPage.clickNextButton();
+
+        //Вводим срок аренды
+        orderPage.orderRent("25.04.2024", "трое суток");
+        orderPage.clickNextOrderButton();
+
+        //Подтверждаем аренду
+        orderPage.getAgreeOrder();
+
+        //Проверяем окно об успешном создании заказа
+        Assert.assertTrue(orderPage.issuedOrderText());
+
+        //Закрываем браузер
+        // По заданию: Метод driver.quit(); нужно использовать в конце каждого теста.
+        driver.quit();
+    }
 }

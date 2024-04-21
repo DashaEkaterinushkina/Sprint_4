@@ -1,17 +1,12 @@
 package ru.yandex.praktikum.tests;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import ru.yandex.praktikum.StartEnd;
-import ru.yandex.praktikum.WebDriverFactory;
+import ru.yandex.praktikum.BaseTest;
 import ru.yandex.praktikum.page.MainPage;
 import static org.junit.Assert.assertTrue;
-import static ru.yandex.praktikum.Constant.URLCONST;
 
 @RunWith(Parameterized.class)
 public class MainQuestins {
@@ -41,8 +36,8 @@ public class MainQuestins {
     @Test
     public void mainQuestionTest() {
         //Запускам браузер
-        StartEnd startEnd = new StartEnd();
-        driver = startEnd.setup("firefox");
+        BaseTest baseTest = new BaseTest();
+        driver = baseTest.setup("firefox");
 
         //Создаем объект класса
         MainPage mainPage = new MainPage(driver);
@@ -57,6 +52,7 @@ public class MainQuestins {
         assertTrue(answerIsDisplayed);
 
         //Закрываем браузер
-        startEnd.tearDown();
+        // По заданию: Метод driver.quit(); нужно использовать в конце каждого теста.
+        driver.quit();
     }
 }
